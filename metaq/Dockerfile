@@ -1,5 +1,5 @@
 # VERSION jackfish/metaq
-FROM index.alauda.cn/jackzhou/java8
+FROM jackzhou/java8
 # 签名啦
 MAINTAINER jack "askfish@gmail.com"
 
@@ -19,6 +19,9 @@ CMD bash metaServer.sh start local
 
 # dashboard 8120端口
 EXPOSE 8120
+
+# zookeeper 8121端口
+EXPOSE 8121
 
 # stats 8123端口
 EXPOSE 8123
