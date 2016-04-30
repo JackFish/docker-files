@@ -1,5 +1,5 @@
 # VERSION jackfish/metaq
-FROM jackfish/java8
+FROM index.alauda.cn/jackzhou/java8
 # 签名啦
 MAINTAINER jack "askfish@gmail.com"
 
