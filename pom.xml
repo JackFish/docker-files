@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.dextrys</groupId>
+  <artifactId>docker-file-build</artifactId>
+  <version>latest</version>
+
+  <properties>
+    <nexus.server>http://10.0.72.101:8081/content/groups/public/</nexus.server>
+    <nexus.thirdparty>http://10.0.72.101:8081/content/repositories/thirdparty/</nexus.thirdparty>
+  </properties>
+  <repositories>
+    <repository>
+      <id>public</id>
+      <url>${nexus.server}</url>
+    </repository>
+    <repository>
+      <id>thirdparty</id>
+      <url>${nexus.thirdparty}</url>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>public</id>
+      <url>${nexus.server}</url>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <build>
+    <plugins>
+      <!--docker build java -->
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>0.4.9</version>
+        <configuration>
+          <dockerHost>http://10.0.72.100:4243</dockerHost>
+          <imageName>java8-zh-cn:${project.version}</imageName>
+          <dockerDirectory>metaq</dockerDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <id>build-image</id>
+            <phase>package</phase>
+            <goals>
+              <goal>build</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>tag-image</id>
+            <phase>package</phase>
+            <goals>
+              <goal>tag</goal>
+            </goals>
+            <configuration>
+              <image>java8-zh-cn:${project.version}</image>
+              <newName>10.0.72.100:5000/java8-zh-cn:${project.version}</newName>
+            </configuration>
+          </execution>
+          <execution>
+            <id>push-image</id>
+            <phase>package</phase>
+            <goals>
+              <goal>push</goal>
+            </goals>
+            <configuration>
+              <imageName>10.0.72.100:5000/java8-zh-cn:${project.version}</imageName>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!--docker build metaq -->
+      <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>0.4.9</version>
+        <configuration>
+          <dockerHost>http://10.0.72.100:4243</dockerHost>
+          <imageName>metaq:${project.version}</imageName>
+          <dockerDirectory>metaq</dockerDirectory>
+        </configuration>
+        <executions>
+          <execution>
+            <id>build-image</id>
+            <phase>package</phase>
+            <goals>
+              <goal>build</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>tag-image</id>
+            <phase>package</phase>
+            <goals>
+              <goal>tag</goal>
+            </goals>
+            <configuration>
+              <image>metaq:${project.version}</image>
+              <newName>10.0.72.100:5000/metaq:${project.version}</newName>
+            </configuration>
+          </execution>
+          <execution>
+            <id>push-image</id>
+            <phase>package</phase>
+            <goals>
+              <goal>push</goal>
+            </goals>
+            <configuration>
+              <imageName>10.0.72.100:5000/metaq:${project.version}</imageName>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+
+</project>
