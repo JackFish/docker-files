@@ -1,4 +1,4 @@
-# 10.0.72.100:5000/java8-zh-cn:latest
+# jenkins
 FROM localhost:5000/java8:latest
 # 签名啦
 MAINTAINER jack "jack.zhou@dextrys.com"

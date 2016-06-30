@@ -1,5 +1,5 @@
 # VERSION jackfish/metaq
-FROM 10.0.72.100:5000/java8-zh-cn:latest
+FROM localhost:5000/java8-zh-cn:latest
 # 签名啦
 MAINTAINER jack "askfish@gmail.com"
 
