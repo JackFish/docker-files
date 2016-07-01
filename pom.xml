@@ -4,12 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.dextrys</groupId>
     <artifactId>docker-file-build</artifactId>
+    <packaging>jar</packaging>
     <version>latest</version>
 
     <properties>
         <nexus.server>http://10.0.245.111:8081/content/groups/public/</nexus.server>
         <nexus.thirdparty>http://10.0.245.111:8081/content/repositories/thirdparty/</nexus.thirdparty>
-        <docker.build.server>https://localhost:2376</docker.build.server>
+        <docker.build.server>https://192.168.99.100:2376</docker.build.server>
         <docker.register.server>localhost:5000</docker.register.server>
     </properties>
     <repositories>
@@ -22,6 +23,19 @@
             <url>${nexus.thirdparty}</url>
         </repository>
     </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>com.spotify</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>0.4.9</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.spotify</groupId>-->
+            <!--<artifactId>docker-client</artifactId>-->
+            <!--<classifier>shaded</classifier>-->
+            <!--<version>5.0.2</version>-->
+        <!--</dependency>-->
+    </dependencies>
 
     <pluginRepositories>
         <pluginRepository>
@@ -31,6 +45,15 @@
     </pluginRepositories>
 
     <build>
+        <resources>
+            <resource>
+                <directory>resources/dockerfile/</directory>
+                <includes>
+                    <include>Dockerfile</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <!--docker build java -->
             <plugin>
@@ -40,8 +63,9 @@
                 <configuration>
                     <dockerHost>${docker.build.server}</dockerHost>
                     <imageName>${docker.name}:${docker.version}</imageName>
-                    <dockerDirectory>${docker.name}</dockerDirectory>
-                    <useConfigFile>true</useConfigFile>
+                    <dockerDirectory>resources/dockerfile/${docker.name}</dockerDirectory>
+                    <dockerCertPath>${basedir}/resources/certs</dockerCertPath>
+                    <!--<dockerCertPath>C:\Users\jack.zhou\.docker\machine\certs</dockerCertPath>-->
                 </configuration>
                 <executions>
                     <execution>
@@ -69,19 +93,21 @@
                             <goal>push</goal>
                         </goals>
                         <configuration>
-                            <imageName>${docker.register.server}/${docker.name}:${project.version}</imageName>
+                            <imageName>${docker.register.server}/${docker.name}:${docker.version}</imageName>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
+
+
     </build>
     <profiles>
         <profile>
             <id>java</id>
             <properties>
                 <docker.name>java</docker.name>
-                <docker.version>1.0.0</docker.version>
+                <docker.version>8u91b14</docker.version>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -91,6 +117,16 @@
             <id>java-zh-cn</id>
             <properties>
                 <docker.name>java-zh-cn</docker.name>
+                <docker.version>8u91b14</docker.version>
+            </properties>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>jenkins</id>
+            <properties>
+                <docker.name>jenkins</docker.name>
                 <docker.version>1.0.0</docker.version>
             </properties>
             <activation>

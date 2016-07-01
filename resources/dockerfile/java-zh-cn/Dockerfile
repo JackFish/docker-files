@@ -1,5 +1,5 @@
 # 10.0.72.100:5000/java8-zh-cn:latest
-FROM localhost:5000/java8:latest
+FROM localhost:5000/java:8u91b14
 # 签名啦
 MAINTAINER jack "jack.zhou@dextrys.com"
 
