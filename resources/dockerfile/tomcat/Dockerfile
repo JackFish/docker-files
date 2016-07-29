@@ -9,7 +9,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 ENV TOMCAT_MAJOR_VERSION 8
-ENV TOMCAT_MINOR_VERSION 8.0.11
+ENV TOMCAT_MINOR_VERSION 8.5.4
 ENV CATALINA_HOME /tomcat
 
 # INSTALL TOMCAT
@@ -24,4 +24,4 @@ ADD run.sh /run.sh
 RUN chmod +x /*.sh
 
 EXPOSE 8080
-CMD ["/run.sh"]
+CMD ["sh /run.sh"]

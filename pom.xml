@@ -137,7 +137,7 @@
             <id>tomcat</id>
             <properties>
                 <docker.name>tomcat</docker.name>
-                <docker.version>1.0.0</docker.version>
+                <docker.version>8.0.11</docker.version>
             </properties>
             <activation>
                 <activeByDefault>false</activeByDefault>
