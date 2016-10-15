@@ -3,8 +3,8 @@ FROM ubuntu:latest
 MAINTAINER Jack Zhou <zj_ren8@163.com>
 
 ENV VERSION 8
-ENV UPDATE 91
-ENV BUILD 14
+ENV UPDATE 101
+ENV BUILD 13
 
 ENV JAVA_HOME /usr/lib/jvm/java-${VERSION}-oracle
 ENV JRE_HOME ${JAVA_HOME}/jre
